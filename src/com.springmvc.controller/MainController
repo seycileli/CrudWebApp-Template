@@ -1,0 +1,143 @@
+package com.springmvc.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import com.springmvc.models.Product;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.springmvc.models.Users;
+
+@Controller
+public class MainController {
+	
+	@RequestMapping("xabout")
+	public String aboutHandler() {
+		return "about";
+	}
+	
+	@RequestMapping("xcontactus")
+	public String contactusHandler() {
+		return "contactus";
+	}
+	
+	@RequestMapping("xcrudproduct")
+	public String crudProductHandler() {
+		return "crudproduct";
+	}
+	
+	@RequestMapping("xerror")
+	public String errorHandler() {
+		return "error";
+	}
+	
+	@RequestMapping("xfaq")
+	public String faqHandler() {
+		return "faq";
+	}
+	
+	@RequestMapping("xfooter")
+	public String footerHandler() {
+		return "footer";
+	}
+	
+	@RequestMapping("xheader")
+	public String headerHandler() {
+		return "header";
+	}
+	
+	@RequestMapping("/")
+	public String homeHandler() {
+		return "home";
+	}
+	
+	@RequestMapping("xlogin")
+	public String loginHandler() {
+		return "login";
+	}
+//	
+//	@RequestMapping("xmyhome")
+//	public String myHomeHandler() {
+//		return "myhome";
+//	}
+	
+//	@RequestMapping("xmyhome")
+//	public ModelAndView myHomeMavHandler(@RequestParam ("username") String username) {
+//		ModelAndView mav = new ModelAndView("myhome");
+//		mav.addObject("username", username);
+//		return mav;
+//	}
+	
+	@RequestMapping("xmyhome")
+	public ModelAndView myHomeHandler (@ModelAttribute() Users userx) {
+		ModelAndView mav = new ModelAndView("myhome");	
+		mav.addObject("username", userx.getUsername());
+		mav.addObject("password", userx.getPassword());
+		mav.addObject("usery", userx);
+		System.out.println("usery");
+		System.out.println(userx.getUsername() + userx.getPassword());
+		System.out.println(userx.toString());
+		return mav;
+	}
+	
+	@RequestMapping("xnavigation")
+	public String navigationHandler() {
+		return "navigation";
+	}
+	
+	@RequestMapping("xrecoverpassword")
+	public String recoverPasswordHandler() {
+		return "recoverpassword";
+	}
+	
+	@RequestMapping("xrecoverusername")
+	public String recoverUsernameHandler() {
+		return "recoverusername";
+	}
+	
+	@RequestMapping("xshoppingcart")
+	public String shoppingCartHandler() {
+		return "shoppingcart";
+	}
+	
+	@RequestMapping("xshowproducts")
+	public ModelAndView showProductsHandler() {
+		List<Product> productsList = new ArrayList<>();
+		for (int i = 1; i <= 25; i++) {
+			productsList.add(new Product("1.jpg", i, "100" + (1 + 1), 9.95 + (i * 10)));
+			for (Product p : productsList) {
+				System.out.println(p.toString().length());
+			}
+		}
+		
+		ModelAndView mav = new ModelAndView("showproducts");
+		System.out.println(productsList.get(0));
+		mav.addObject("products", productsList);
+		
+		return mav; // << change to mav
+	}
+	
+	@RequestMapping("xuserprofile")
+	public String userProfileHandler() {
+		return "userprofile";
+	}
+}
+
+/**
+ * 
+ * 	@RequestMapping("/") //default value, most likely home or index.jsp for example
+ *	public String homeHandler() {
+ *		return "home"; //this is returning the jsp name
+ *	}
+ *
+ *	@RequestMapping("login") //name of the href for example --> <a href="login">Login</a> 
+	public String loginHandler() { //this is just the method name
+		return "login"; //name of the jsp file
+	}
+ * 
+ * The above method is also called a 'handler'
+ * 		the empty quotations inside of the ("") represents the home or index page
+ */
