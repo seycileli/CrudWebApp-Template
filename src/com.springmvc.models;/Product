@@ -1,0 +1,77 @@
+package com.springmvc.models;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table
+public class Product {
+	
+	@Basic
+	@Column
+	private String imgs;
+	
+	@Id @GeneratedValue
+	private int id;
+	
+	@Basic
+	@Column
+	private String title;
+	
+	@Basic
+	@Column
+	private double price;
+
+	public Product() {
+		super();
+	}
+	public Product(String imgs, int id, String title, double price) {
+		super();
+		this.imgs = imgs;
+		this.id = id;
+		this.title = title;
+		this.price = price;
+	}
+	
+	@Override
+	public String toString() {
+		return "Product [imgs=" + imgs + ", id=" + id + ", title=" + title + ", price=" + price + "]";
+	}
+	
+	public String getImgs() {
+		return imgs;
+	}
+
+	public void setImgs(String imgs) {
+		this.imgs = imgs;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+	
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public double getPrice() {
+		return price;
+	}
+	
+	public void setPrice(double price) {
+		this.price = price;
+	}
+}
