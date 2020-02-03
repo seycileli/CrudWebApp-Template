@@ -1,0 +1,75 @@
+package com.springmvc.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.springmvc.models.Product;
+import com.springmvc.services.ProductServices;
+
+@Controller
+public class ProductController {
+	
+	@RequestMapping("xproductmain")
+	public ModelAndView mainProductionHandler() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("products/productmain");
+
+		return mav;
+	}
+	
+	@RequestMapping("xproductdelete")
+	public ModelAndView productDeleteHandler() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("poducts/productdelete");
+		
+		return mav;
+	}
+	
+	@RequestMapping("xproductedit")
+	public ModelAndView productEditHandler() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("products/productedit");
+		
+		return mav;
+	}
+	
+	@RequestMapping("xproductadd")
+	public ModelAndView addProductHandler() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("products/productnew");
+		
+		return mav;
+	}
+	
+	@RequestMapping("xproductshow")
+	public ModelAndView showProductHandler() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("products/productshow");
+		
+		return mav;
+	}
+	
+	@RequestMapping("xproductview")
+	public ModelAndView viewAllProductHandler() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("products/productview");
+		return mav;
+	}
+	
+	@RequestMapping("xsaveproduct")
+	public ModelAndView saveProductHandler(@ModelAttribute() Product product) {
+		ModelAndView mav = new ModelAndView();
+		int result = ProductServices.addProduct(product);
+		
+		if (result == 1) {
+			mav.setViewName("products/productsave");
+		} else {
+			mav.setViewName("products/error");
+		}
+		
+		return mav;
+	}
+
+}
