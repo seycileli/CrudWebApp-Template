@@ -1,8 +1,11 @@
 package com.springmvc.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.springmvc.models.Product;
@@ -19,18 +22,47 @@ public class ProductController {
 		return mav;
 	}
 	
-	@RequestMapping("xproductdelete")
-	public ModelAndView productDeleteHandler() {
+//	@RequestMapping("xdeleteproduct")
+//	public ModelAndView productDeleteHandler() {
+//		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("poducts/productdelete");
+//	
+//		return mav;
+//	}
+	
+	@RequestMapping("xdeleteproduct")
+	public ModelAndView removeProductHandler(@RequestParam("id") int productId) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("poducts/productdelete");
+		mav.setViewName("products/xdeleteproduct");
+		
+		int result = ProductServices.deleteProduct(productId);
+		
+		if (result == 1) { //record deleted if successful
+			mav.addObject("resultMessage", "Product successfully deleted");
+		} else {
+			mav.addObject("resultMessage", "Transaction failed");
+			//if failed, will direct to error page
+		}
+		
+		mav.setViewName("products/productdelete"); 
+		//will direct back to jsp page whether successful or not
+
 		
 		return mav;
 	}
 	
 	@RequestMapping("xproductedit")
-	public ModelAndView productEditHandler() {
+	public ModelAndView productEditHandler(@ModelAttribute() Product product) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("products/productedit");
+		mav.setViewName("/products/productedit");
+		
+		int result = ProductServices.updateProduct(product);
+		
+		if (result == 1) {
+			System.out.println("Success");
+		} else {
+			System.out.println("Failed");
+		}
 		
 		return mav;
 	}
@@ -44,17 +76,49 @@ public class ProductController {
 	}
 	
 	@RequestMapping("xproductshow")
-	public ModelAndView showProductHandler() {
+	public ModelAndView showProductHandler(@ModelAttribute() Product product) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("products/productshow");
+		
+		
+		
 		
 		return mav;
 	}
 	
 	@RequestMapping("xproductview")
-	public ModelAndView viewAllProductHandler() {
+	public ModelAndView viewAllProductHandler(@RequestParam("id") int productId) {
+		/**
+		 * This is our SHOWPRODUCT
+		 * similar to Marcial's "xshowProduct" class/ method/ handler
+		 * 
+		 */
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("products/productview");
+		
+		Product product = ProductServices.getProductById(productId);
+		mav.addObject("product", product);
+		
+		return mav;
+	}
+	
+	@RequestMapping("xenternewproduct")
+	public ModelAndView enterNewProductHandler(@ModelAttribute() Product product) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("products/enternewproduct");
+		mav.addObject("product", product);
+		
+		return mav;
+	}
+	
+	@RequestMapping("xconfirmproduct")
+	public ModelAndView confirmProductHandler(@ModelAttribute() Product product) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("products/confirmproduct");
+		mav.addObject("product", product);
+		
+		
 		return mav;
 	}
 	
